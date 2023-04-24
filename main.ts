@@ -185,7 +185,7 @@ export default class Waypoint extends Plugin {
 	 * @returns The string representation of the tree, or null if the node is not a file or folder
 	 */
 	async getFileTreeRepresentation(rootNode: TFolder, node: TAbstractFile, indentLevel: number, topLevel = false): Promise<string>|null {
-		const bullet = "	".repeat(indentLevel) + "-";
+		const bullet = "	".repeat(indentLevel) + "1.";
 		if (node instanceof TFile) {
 			console.log(node)
 			// Print the file name
@@ -207,7 +207,7 @@ export default class Waypoint extends Plugin {
 			let text = "";
 			if (!topLevel || this.settings.showEnclosingNote) {
 				// Print the folder name
-				text = `${bullet} **${node.name}**`;
+				text = `${bullet} ${node.name}`;
 				let folderNote;
 				if (this.settings.folderNoteType === FolderNoteType.InsideFolder) {
 					folderNote = this.app.vault.getAbstractFileByPath(node.path + "/" + node.name + ".md");
@@ -218,9 +218,9 @@ export default class Waypoint extends Plugin {
 				}
 				if (folderNote instanceof TFile) {
 					if (this.settings.useWikiLinks) {
-						text = `${bullet} **[[${folderNote.basename}]]**`;
+						text = `${bullet} [[${folderNote.basename}]]`;
 					} else {
-						text = `${bullet} **[${folderNote.basename}](${this.getEncodedUri(rootNode, folderNote)})**`;
+						text = `${bullet} [${folderNote.basename}](${this.getEncodedUri(rootNode, folderNote)})`;
 					}
 					if (!topLevel) {
 						if (this.settings.stopScanAtFolderNotes) {
